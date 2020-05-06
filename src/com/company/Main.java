@@ -60,7 +60,6 @@ public class Main extends JFrame {
         resumeMenuItem.setEnabled(false);
         getContentPane().add(field, BorderLayout.CENTER);
     }
-
     public static void main(String[] args) {
         Main frame = new Main();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

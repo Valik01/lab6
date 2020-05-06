@@ -59,7 +59,7 @@ public class BouncingBall implements Runnable {
                 Thread.sleep(16 - speed);
 
             }
-            }
+        }
         catch(InterruptedException ex){};
         }
 
