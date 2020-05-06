@@ -8,8 +8,10 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Field extends JPanel{
-    private boolean paused;
     private ArrayList<BouncingBall> balls = new ArrayList<BouncingBall>(10);
+    private boolean paused;
+    private boolean pausedTwo;
+
     private Timer repaintTimer = new Timer(10, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -22,6 +24,10 @@ public class Field extends JPanel{
         repaintTimer.start();
     }
 
+    public void addBall(){
+        balls.add(new BouncingBall(this));
+    }
+
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D canvas = (Graphics2D) g;
@@ -30,22 +36,28 @@ public class Field extends JPanel{
         }
     }
 
-    public void addBall(){
-        balls.add(new BouncingBall(this));
-    }
-
     public synchronized void pause(){
         paused = true;
     }
 
+    public void pauseLittle(){
+        pausedTwo = true;
+    }
+
+
     public synchronized void resume(){
         paused = false;
+        pausedTwo = false;
         notifyAll();
     }
 
     public synchronized void canMove(BouncingBall ball) throws InterruptedException {
         if(paused){
             wait();
+        }
+        if (pausedTwo) {
+            if(ball.getRadius() < 10)
+                wait();
         }
     }
 

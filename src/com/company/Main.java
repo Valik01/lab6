@@ -9,6 +9,7 @@ public class Main extends JFrame {
     public static final int HEIGHT = 500;
 
     public JMenuItem pauseMenuItem;
+    private JMenuItem pauseTwoMenuItem;
     public JMenuItem resumeMenuItem;
 
     private Field field = new Field();
@@ -29,6 +30,7 @@ public class Main extends JFrame {
                 field.addBall();
                 if(!pauseMenuItem.isEnabled() && !resumeMenuItem.isEnabled()){
                     pauseMenuItem.setEnabled(true);
+                    pauseTwoMenuItem.setEnabled(true);
                 }
             }
         };
@@ -38,11 +40,13 @@ public class Main extends JFrame {
 
         JMenu controlMenu = new JMenu("Управление");
         menuBar.add(controlMenu);
+
         Action pauseAction = new AbstractAction("Приостановить движение") {
             @Override
             public void actionPerformed(ActionEvent event) {
                 field.pause();
                 pauseMenuItem.setEnabled(false);
+                pauseTwoMenuItem.setEnabled(false);
                 resumeMenuItem.setEnabled(true);
             }
         };
@@ -53,13 +57,29 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 field.resume();
                 pauseMenuItem.setEnabled(true);
+                pauseTwoMenuItem.setEnabled(true);
                 resumeMenuItem.setEnabled(false);
             }
         };
         resumeMenuItem = controlMenu.add(resumeAction);
         resumeMenuItem.setEnabled(false);
+
+        Action littlePauseAction = new AbstractAction("Остановить мячи малого радиуса"){
+            public void actionPerformed(ActionEvent event) {
+                {
+                    field.pauseLittle();
+                    pauseMenuItem.setEnabled(false);
+                    pauseTwoMenuItem.setEnabled(false);
+                    resumeMenuItem.setEnabled(true);
+                }
+            }
+        };
+        pauseTwoMenuItem = controlMenu.add(littlePauseAction);
+        pauseTwoMenuItem.setEnabled(false);
+
         getContentPane().add(field, BorderLayout.CENTER);
     }
+
     public static void main(String[] args) {
         Main frame = new Main();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
