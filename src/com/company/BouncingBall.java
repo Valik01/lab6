@@ -55,7 +55,6 @@ public class BouncingBall implements Runnable {
                     x += speedX;
                     y += speedY;
                 }
-
                 Thread.sleep(16 - speed);
 
             }
